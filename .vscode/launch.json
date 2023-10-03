@@ -1,0 +1,23 @@
+{
+  // Utilitzeu IntelliSense per aprendre sobre els atributs possibles.
+  // Passeu el cursor per sobre per veure les descripcions dels atributs existents.
+  // Per a més informació, visiteu: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Launch Program",
+      "program": "${workspaceFolder}/app.js",
+      "request": "launch",
+      "skipFiles": ["<node_internals>/**"],
+      "type": "node"
+    },
+
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Launch Program",
+      "skipFiles": ["<node_internals>/**"],
+      "program": "${workspaceFolder}/src/index.js"
+    }
+  ]
+}
