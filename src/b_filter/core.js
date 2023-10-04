@@ -16,14 +16,15 @@ function positiveRowsOnly(array) {
   return array.filter((row) => row.every((number) => number > 0));
 }
 
-//1r. Creem un array amb totes les vocals de cada paraula
-//2n. Comprovem que totes les vocals siguin iguals
+//1. Creem un array amb totes les vocals de cada paraula
+//2. Comprovem que totes les vocals siguin iguals. Si ho són, retornem la paraula
+//regexr.com/7l49m
 function allSameVowels(array) {
-  return array.filter((word) => {
-    const regexp = /[a,e,i,o,u,A,E,I,O,U]/g;
-    const vowels = [...word.matchAll(regexp)];
-    return vowels.every(([vowel], _, [firstVowel]) => vowel === firstVowel[0]);
-  });
+  const sameVowels = (word) => {
+    let vowels = word.match(/[aeiouAEIOU]/gi);
+    return vowels.every((x) => x === vowels[0]);
+  };
+  return array.filter(sameVowels);
 }
 
 module.exports = {
