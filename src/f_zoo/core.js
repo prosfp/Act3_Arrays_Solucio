@@ -65,8 +65,20 @@ function animalCount(species) {
   return !species ? animalsCount : animalsCount[species];
 }
 
-function animalMap(options) {
-  // your code here
+function animalMap({ includeNames, sex } = { includeNames: null, sex: null }) {
+  // Ens podem crear l'estructura de l'objecte inicial:
+  const initialValue = {
+    NE: [],
+    NW: [],
+    SE: [],
+    SW: [],
+  };
+
+  // Amb reduce podem tornar a recòrrer l'array i anar emmagatzemant els animals en cas
+  // en funció dels paràmetres que ens demanin
+
+  return animals.reduce((accum, { location, name, residents }) => {},
+  initialValue);
 }
 
 function animalPopularity(rating) {
