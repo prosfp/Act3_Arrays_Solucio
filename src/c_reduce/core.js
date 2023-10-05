@@ -4,22 +4,15 @@
 // reduce((accum, currentValue)=>{}, initialValue)
 function sum(array) {
   //Quan només tenim una sentència podem estalviarnos {} amb Arrow Functions
-  return array.reduce((accum, currentValue) => {
-    return (accum += currentValue);
-  });
+  return array.reduce((accum, valorActual) => accum + valorActual);
 }
+
 // Nested reduce
 // Compte! Si no fem ús d'un valor inicial a la funció exterior
 // ens trobarem que multipliquem el l'enter resultat del reduce interior
 // pel valor de l'array exterior, en aquest cas un altre array. per ex:
 // (1*2*3=6)*[4,5] = NaN
-function productAll(array) {
-  return array.reduce(
-    (result, numbers) =>
-      result * numbers.reduce((mul, current) => mul * current),
-    1
-  );
-}
+function productAll(array) {}
 
 //En este caso he seguido otra aproximación. He decidido concatenar primero todos los arrays de la matriz
 //y así poder aplicar el reduce como si de un solo array se tratara.
@@ -49,23 +42,9 @@ function productAll(array) {
 //Si el valor amb el que accediu (o afegiu) una variable no el coneixeu, opteu per
 //la notació amb "corxetes"
 
-function objectify(array) {
-  return array.reduce((object, keyValue) => {
-    console.log(object, keyValue[0]);
-    object[keyValue[0]] = keyValue[1];
-    console.log(object);
-    return object;
-  }, {});
-}
+function objectify(array) {}
 
-function luckyNumbers(array) {
-  return array.reduce((sentence, number, index, array) => {
-    const subsentence =
-      index === array.length - 1 ? ` and ${number}` : ` ${number},`;
-    sentence += subsentence;
-    return sentence;
-  }, 'Your lucky numbers are:');
-}
+function luckyNumbers(array) {}
 
 module.exports = {
   sum,

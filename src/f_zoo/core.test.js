@@ -3,7 +3,6 @@
 
 const assert = require('assert');
 const zoo = require('./core');
-const data = require('./data');
 
 describe('Zoo', function () {
   describe('#entryCalculator()', function () {
