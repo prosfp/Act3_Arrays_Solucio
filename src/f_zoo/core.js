@@ -12,6 +12,7 @@ function entryCalculator(entrants) {
   if (!entrants) return 0;
 
   // En quest cas entrants és un objecte amb el nombre d'entrades per tipus (adult, child, senior)
+  // Amb Object.entries podem obtenir els valors de l'objecte en format array
   // La funció ha de retornar el preu total de les entrades
   return Object.entries(entrants).reduce(
     (preuTotal, [tipusEntrada, nombreEntrades]) => {
