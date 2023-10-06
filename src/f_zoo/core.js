@@ -8,7 +8,24 @@ Object.entries -> [[key1, value1], [key2, value2]]
 
 */
 
-function entryCalculator(entrants) {}
+function entryCalculator(entrants) {
+  if (!entrants) return 0;
+
+  // Entrants és de tipus objecte
+  // Amb Object.entries podem obtenir els valors de l'objecte en format Array
+  // La funció ha de retornar un valor únic amb el preu total
+
+  return Object.entries(entrants).reduce(
+    (preuTotal, [tipusEntrada, nombreEntrades]) => {
+      // per cada tipus d'entrada, calculem el preu total d'aquest tipus
+      const preuTotalTipusEntrada = prices[tipusEntrada] * nombreEntrades;
+      // I el sumem el preu total
+      console.log(preuTotal);
+      return preuTotal + preuTotalTipusEntrada;
+    },
+    0
+  );
+}
 
 function schedule(dayName) {
   // Primer podríem obtenir els horaris filtrats en funció de si ens passen un dia concret o no.ç
@@ -16,9 +33,7 @@ function schedule(dayName) {
   // Object.entries -> [[Tuesday, { open: 8, close: 18 }]]
 }
 // Ens fem una funció que em permeti retornar l'hora en format 12h
-function convertHour(hour) {
-  return hour > 12 ? `${hour - 12}pm` : `${hour}am`;
-}
+function convertHour(hour) {}
 
 // Passem les hores a un string llegible
 function hoursToString({ open, close }) {}
@@ -29,7 +44,33 @@ function animalCount(species) {
   // AQUÍ TREBALLEM AMB UN ARRAY D'OBJECTES --> Object no neceesari + destructuring d'objectes!
 }
 
-function animalMap({ includeNames, sex } = { includeNames: null, sex: null }) {}
+//{ includeNames, sex } = { includeNames: null, sex: null }
+
+function animalMap({ includeNames, sex }) {
+  const initialValue = {
+    NE: [],
+    NW: [],
+    SE: [],
+    SW: [],
+  };
+
+  // Si ens demanen els noms dels animals --> retornem Array amb noms d'animals
+  // Si no, únicament l'espècie d'animal
+
+  return animals.reduce((locations, { location, name, residents }) => {
+    const residentsFilter = sex
+      ? residents.filter((resident) => resident.sex === sex)
+      : residents;
+
+    const llistaNoms = includeNames
+      ? { [name]: residentsFilter.map((resident) => resident['name']) }
+      : name;
+
+    //spread operator --> ...
+    locations[location] = [...locations[location], llistaNoms];
+    return locations;
+  }, initialValue);
+}
 
 function animalPopularity(rating) {
   // your code here
