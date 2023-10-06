@@ -65,7 +65,9 @@ function animalCount(species) {
   return !species ? animalsCount : animalsCount[species];
 }
 
-function animalMap({ includeNames, sex } = { includeNames: null, sex: null }) {
+function animalMap(
+  { includeNames, sex } = { includeNames: null, sexEntry: null }
+) {
   // Ens podem crear l'estructura de l'objecte inicial:
   const initialValue = {
     NE: [],
@@ -74,11 +76,27 @@ function animalMap({ includeNames, sex } = { includeNames: null, sex: null }) {
     SW: [],
   };
 
-  // Amb reduce podem tornar a recòrrer l'array i anar emmagatzemant els animals en cas
-  // en funció dels paràmetres que ens demanin
+  // Amb reduce podem tornar a recòrrer l'array i anar emmagatzemant els animal
+  // en funció dels paràmetres que ens demanin:
 
-  return animals.reduce((accum, { location, name, residents }) => {},
-  initialValue);
+  return animals.reduce((locations, { location, name, residents }) => {
+    const residentsFilter = sex
+      ? residents.filter((resident) => resident.sex === sex)
+      : residents;
+    console.log(residentsFilter);
+
+    // Si ens demanen els noms dels animals
+    const withNames = includeNames
+      ? { [name]: residentsFilter.map((resident) => resident['name']) }
+      : name;
+    // Però també podríem aplicar destructuring de l'objecte residents
+    // residents: residents.map(({ name }) => name),
+
+    //Amb l'spread operator podem afegir un nou element a un array: [...array, element]
+    locations[location] = [...locations[location], withNames];
+
+    return locations;
+  }, initialValue);
 }
 
 function animalPopularity(rating) {

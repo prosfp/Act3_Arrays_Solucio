@@ -12,19 +12,19 @@ function sum(array) {
 // ens trobarem que multipliquem el l'enter resultat del reduce interior
 // pel valor de l'array exterior, en aquest cas un altre array. per ex:
 // (1*2*3=6)*[4,5] = NaN
-function productAll(array) {}
+// function productAll(array) {}
 
 //En este caso he seguido otra aproximación. He decidido concatenar primero todos los arrays de la matriz
 //y así poder aplicar el reduce como si de un solo array se tratara.
-//1. Con el método propio Concat y ayudándonos de reduce hacemos que se vayan cogiendo cada uno de los elementos del
+// 1. Con el método propio Concat y ayudándonos de reduce hacemos que se vayan cogiendo cada uno de los elementos del
 // array y los vayamos concatenando en uno nuevo virgen.
-//2. Ahora ya podemos hacer el producto de todos los elementos del array
-// function productAll(array) {
-//   const product = (total, value) => total * value;
-//   const concat = (newArray, group) => newArray.concat(group);
-//   const toMultiply = array.reduce(concat, []);
-//   return toMultiply.reduce(product);
-// }
+// 2. Ahora ya podemos hacer el producto de todos los elementos del array
+function productAll(array) {
+  return array.reduce(
+    (result, numbers) =>
+      result * numbers.reduce((mul, current) => mul * current, 1)
+  );
+}
 
 // var input = [
 //   ['Thundercats', '80s'],
@@ -42,9 +42,22 @@ function productAll(array) {}
 //Si el valor amb el que accediu (o afegiu) una variable no el coneixeu, opteu per
 //la notació amb "corxetes"
 
-function objectify(array) {}
+function objectify(array) {
+  // Podem rebre directament els valors de la nostra array a través del destructuring de l'array
+  return array.reduce((objecte, [key, value]) => {
+    objecte[key] = value;
+    console.log(objecte);
+    return objecte;
+  }, {});
+}
 
-function luckyNumbers(array) {}
+function luckyNumbers(array) {
+  return array.reduce((frase, valorActual, index) => {
+    const subfrase =
+      index === array.length - 1 ? ` and ${valorActual}` : ` ${valorActual},`;
+    return (frase += subfrase);
+  }, 'Your lucky numbers are:');
+}
 
 module.exports = {
   sum,
