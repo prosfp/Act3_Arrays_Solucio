@@ -101,15 +101,53 @@ function animalMap(
 }
 
 function animalPopularity(rating) {
-  // your code here
+  const animalsByPopularity = animals.reduce(
+    (_animals, { popularity, name }) => {
+      if (!_animals[popularity]) {
+        _animals[popularity] = [];
+      }
+      _animals[popularity] = [..._animals[popularity], name];
+      return _animals;
+    },
+    {}
+  );
+
+  return rating ? animalsByPopularity[rating] : animalsByPopularity;
 }
 
 function animalsByIds(ids) {
-  // your code here
+  //Aques switch el podem expressar de manea més sintètica
+  /*   switch (typeof ids) {
+    case 'undefined':
+      return [];
+    case 'string':
+      [animals.find((_animals) => _animals.id === id)];
+    case 'object':
+      animals.filter((_animals) => ids.includes(_animals.id));
+  } */
+  const funcsByTypes = {
+    undefined: () => [],
+    string: (id) => [animals.find((_animals) => _animals.id === id)],
+    object: (ids) => animals.filter((_animals) => ids.includes(_animals.id)),
+  };
+
+  return funcsByTypes.hasOwnProperty(typeof ids)
+    ? funcsByTypes[typeof ids](ids)
+    : [];
 }
 
 function animalByName(animalName) {
-  // your code here
+  const findAnimalByName = ({ name }) => name == animalName;
+  const getAnimal = () => {
+    const { name, residents } = animals.find(({ residents }) =>
+      residents.find(findAnimalByName)
+    );
+    const animal = residents.find(findAnimalByName);
+    animal.species = name;
+    return animal;
+  };
+
+  return animalName ? getAnimal() : {};
 }
 
 function employeesByIds(ids) {
