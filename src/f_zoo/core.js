@@ -31,17 +31,40 @@ function schedule(dayName) {
   // Primer podríem obtenir els horaris filtrats en funció de si ens passen un dia concret o no.ç
   // Exemple: { Tuesday: { open: 8, close: 18 } }
   // Object.entries -> [[Tuesday, { open: 8, close: 18 }]]
+
+  const hoursFiltered = !dayName ? hours : { [dayName]: hours[dayName] };
+  return Object.entries(hoursFiltered).reduce((acc, [day, hours]) => {
+    acc[day] = hoursToString(hours);
+    return acc;
+  }, {});
+
+  // Ens fem una funció que em permeti retornar l'hora en format 12h
+function convertHour(hour) {
+  return hour > 12 ? `${hour - 12}pm` : `${hour}am`;
 }
-// Ens fem una funció que em permeti retornar l'hora en format 12h
-function convertHour(hour) {}
 
 // Passem les hores a un string llegible
-function hoursToString({ open, close }) {}
+function hoursToString({ open, close }) {
+  let readableDate = 'CLOSED';
+  if (open !== close) {
+    const opening = convertHour(open);
+    const closing = convertHour(close);
+    readableDate = `Open from ${opening} until ${closing}`;
+  }
+  return readableDate;
+}
 
 function animalCount(species) {
   // Necessitem treballar amb la llista "animals" i els paràmetres:
   // ex: name: 'lions', residents: [{},{}...],
   // AQUÍ TREBALLEM AMB UN ARRAY D'OBJECTES --> Object no neceesari + destructuring d'objectes!
+  const animalsCount = animals.reduce((accum,{name,residents})=>{
+    accum[name] = residents.length;
+    return accum;
+  },{});
+
+  return !species ? animalsCount : animalsCount[species];
+
 }
 
 //{ includeNames, sex } = { includeNames: null, sex: null }
