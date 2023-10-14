@@ -192,7 +192,24 @@ function employeeByName(employeeName) {
 }
 
 function managersForEmployee(idOrName) {
-  // your code here
+  //Els empleats tenen assignats managers i un manager té assignat un o diversos empleats.
+  //Quan ens passen el nom o id d'un empleat o els seus noms, retornem la informació
+  //d'aquest empleat però enlloc de l'ID dels seus managers, posem el nom.
+  //1-Primer anem a obtenir la informació del nostre empleat:
+  const fields = ['id', 'firstName', 'lastName'];
+  const cerca = fields.map((field) =>
+    employees.find((treballador) => treballador[field] === idOrName)
+  );
+  //Això farà que tinguem undefined (falsy) o l'objecte (truthy) del treballador.
+  //2-Ara anem a cercar el nom dels managers.
+  const treballador = cerca.find(Boolean);
+  treballador.managers = treballador.managers.map((managerID) => {
+    const managers = employees.find((trblldr) => trblldr.id === managerID);
+    //El map ja farà que retorni el l'array dels noms que jo passo en forma d'string:
+    return `${managers.firstName} ${managers.lastName}`;
+  });
+  //3-Retornem l'objecte amb la informació modificada.
+  return treballador;
 }
 
 function employeeCoverage(idOrName) {
