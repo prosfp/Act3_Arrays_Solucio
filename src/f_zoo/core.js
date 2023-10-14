@@ -151,11 +151,44 @@ function animalByName(animalName) {
 }
 
 function employeesByIds(ids) {
-  // your code here
+  // Employees is an array of objects.
+  // If no id --> empty array.
+  // If id --> array with 1 employee info (array with 1 object)
+  //// Retornem TOT l'element si trobem la coincidència --> find?
+  // if ids --> array with n employee info (array o object)
+  //// Retornem TOTS els elements coincidents --> filter?
+
+  //Hem puc crear un objecte amb tres mètodes que s'executaran en funció del tipus
+  //de paràmetre que em passin:
+
+  const funcByType = {
+    undefined: () => [],
+    string: (id) => employees.find((_employee) => _employee.id === id),
+    object: (ids) =>
+      employees.filter((_employee) => ids.includes(_employee.id)),
+  };
+
+  return funcByType[typeof ids](ids);
 }
 
 function employeeByName(employeeName) {
-  // your code here
+  // Busquem d'acord al nom o cognom independentment del que ens introdueixi.
+  // Retornem l'objecte. No cal contemplar més d'un treballador amb el mateix nom.
+  // Retornem una única coincidència --> find?
+  // Com que hem de comprovar first_name i Second_name, podem utilitzar diferents estratègies
+  // per comprovar-ho.
+
+  const firstLast = (name) => {
+    const fields = ['firstName', 'secondName'];
+    const cerca = fields.map((valor) =>
+      employees.find((treballador) => treballador[valor] === name)
+    );
+    //Compte, estem retornar un array però! Ens cal retornar un objecte.
+    //Podem aprofitar del mateix "find" perquè retorni l'element únicament
+    return cerca.find((result) => result !== undefined);
+  };
+
+  return employeeName ? firstLast(employeeName) : {};
 }
 
 function managersForEmployee(idOrName) {
