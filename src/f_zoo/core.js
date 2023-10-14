@@ -96,7 +96,17 @@ function animalMap({ includeNames, sex }) {
 }
 
 function animalPopularity(rating) {
-  // your code here
+  const animalsByPopularity = animals.reduce((_animals,{name,popularity})=>{
+    //Si la popularitat no s'ha introduït encara --> Crea i introdueix el nom de l'animal.
+    if (!_animals[popularity]){
+      _animals[popularity] = [];
+    }
+    //Si la popularitat ja existeix --> afegeix únicament l'animal. 
+    _animals[popularity] = [..._animals[popularity], name];
+    return _animals;
+  },{});
+
+  return rating ? animalsByPopularity[rating] : animalsByPopularity
 }
 
 function animalsByIds(ids) {
