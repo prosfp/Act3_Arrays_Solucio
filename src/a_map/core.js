@@ -1,7 +1,5 @@
 function multiplyBy10(array) {
-  return array.map((element) => {
-    return element * 10;
-  });
+
 }
 
 //MAP NO MODIFICA L'ARRAY ORIGINAL
