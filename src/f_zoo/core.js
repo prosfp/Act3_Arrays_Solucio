@@ -27,18 +27,18 @@ function entryCalculator(entrants) {
 }
 
 function schedule(dayName) {
-  // Ens fem una funció que em permeti retonrar l'hora en format 12h
-
   // Canviem el format dels horaris de manera que poguem recorrer i filtrar
   // Exemple Object Entries --> [[Tuesday, {open: 8, close:18}],[Wednesday, {...}]]
 
   // Anem a filtrar la informació en funció de si ens passen el dia o no
 
   const hoursFiltered = !dayName ? hours : { [dayName]: hours[dayName] };
+  // Ex: {Monday: { open: 0, close: 0 } }
   const hoursFilteredArray = Object.entries(hoursFiltered);
+  // Ex: [[Monday, {open: 0, close: 0}]]
   console.log(hoursFilteredArray);
 
-  return Object.entries(hoursFiltered).reduce((horari, [dia, hores]) => {
+  return hoursFilteredArray.reduce((horari, [dia, hores]) => {
     horari[dia] = hoursToString(hores);
     return horari;
   }, {});
@@ -53,20 +53,41 @@ function schedule(dayName) {
     return dataText;
   }
 
-  // Funció per retornar l'hora en format 12h
+  // Ens fem una funció que em permeti retonrar l'hora en format 12h
   function convertHour(hour) {
     return hour > 12 ? `${hour - 12}pm` : `${hour}am`;
   }
 }
 
-function convertHour(hour) {}
+// Necessitem treballar amb l'array "animals"
+// AQUÍ TREBALLEM AMB UN ARRAY D'OBJECTES --> Object no necessari
+// Però si em pot anar bé --> destructuring d'objectes
+function animalCount(species) {
+  const animalsCount = animals.reduce((accum, { name, residents }) => {
+    accum[name] = residents.length;
+    return accum;
+  }, {});
 
-// Passem les hores a un string llegible
-function hoursToString({ open, close }) {}
+  return !species ? animalsCount : animalsCount[species];
+}
 
-function animalCount(species) {}
+function animalMap({ includeNames }) {
+  const initialValue = {
+    NE: [],
+    NW: [],
+    SE: [],
+    SW: [],
+  };
 
-function animalMap() {}
+  return animals.reduce((accum, { name, location, residents }) => {
+    const llistaNoms = includeNames
+      ? { [name]: residents.map((resident) => resident.name) }
+      : name;
+
+    accum[location] = [...accum[location], llistaNoms];
+    return accum;
+  }, initialValue);
+}
 
 function animalPopularity(rating) {
   // Your code here
