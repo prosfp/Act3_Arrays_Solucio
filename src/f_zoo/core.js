@@ -71,7 +71,7 @@ function animalCount(species) {
   return !species ? animalsCount : animalsCount[species];
 }
 
-function animalMap({ includeNames }) {
+function animalMap({ includeNames, sex: genere } = {}) {
   const initialValue = {
     NE: [],
     NW: [],
@@ -79,10 +79,16 @@ function animalMap({ includeNames }) {
     SW: [],
   };
 
-  return animals.reduce((accum, { name, location, residents }) => {
+  return animals.reduce((accum, { name: especie, location, residents }) => {
+    //Filtrem els residents en funció del sexe si tenim el paràmetre.
+    const residentsFilter = genere
+      ? residents.filter((resident) => resident.sex === genere)
+      : residents;
+
+    // Retornem un array amb els noms dels residents
     const llistaNoms = includeNames
-      ? { [name]: residents.map((resident) => resident.name) }
-      : name;
+      ? { [especie]: residentsFilter.map((resident) => resident.name) }
+      : especie;
 
     accum[location] = [...accum[location], llistaNoms];
     return accum;
@@ -90,7 +96,19 @@ function animalMap({ includeNames }) {
 }
 
 function animalPopularity(rating) {
-  // Your code here
+  const animalsByPopularity = animals.reduce((acc, { name, popularity }) => {
+    //Si el "key" ja existeix, afegeixes simplement el nom de l'espècie.
+    //Si no existeix, hauré de crear a més a més el "key" necessari.
+  }, {});
+
+  // {
+  //   3: ['snakes'],
+  //   2: ['frogs'],
+  //   4: ['lions', 'penguins', 'otters', 'giraffes'],
+  //   5: ['tigers', 'bears', 'elephants'],
+  // };
+
+  return rating ? animalsByPopularity[rating] : animalsByPopularity;
 }
 
 function animalsByIds(ids) {}
